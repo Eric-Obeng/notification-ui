@@ -1,0 +1,22 @@
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  gap: 2rem;
+  // width: 100vw;
+  // border: 2px solid red;
+}
+
+@media (max-width: 769px) {
+  .main-container {
+
+    flex-direction: column;
+    padding: 4rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .main-container {
+  }
+}
