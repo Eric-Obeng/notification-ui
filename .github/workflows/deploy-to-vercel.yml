@@ -1,0 +1,37 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x, 20.x] 
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version:  ${{ matrix.node-version }} # Ensure you use a version compatible with your project
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build # Adjust this to your build script
+
+      - name: Deploy to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_TEAM_ID: ${{ secrets.VERCEL_TEAM_ID }}
+        run: npx vercel --prod --token $VERCEL_TOKEN --project $VERCEL_TEAM_ID
